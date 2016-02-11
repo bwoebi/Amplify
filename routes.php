@@ -11,5 +11,6 @@ $router = router()
     ->route('GET', '/', function(Request $request, Response $response) use ($template) {
         $response->send(file_get_contents(__DIR__ . '/templates/page.phtml'));
     })
-    ->route('GET', '/ws', websocket(new Handler()))
+    ->route('GET', '/ws', websocket(new Handler(), ["maxBytesPerMinute" => 1 << 26, "maxFramesPerSecond" => 1000000]))
+    ->route('GET', '/stop', function() { \Amp\stop(); })
 ;
